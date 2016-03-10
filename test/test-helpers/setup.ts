@@ -1,3 +1,5 @@
+import 'angular2/bundles/angular2-polyfills';
+import 'es6-shim/es6-shim.min';
 import {setBaseTestProviders} from 'angular2/testing';
 import {
 TEST_BROWSER_PLATFORM_PROVIDERS,

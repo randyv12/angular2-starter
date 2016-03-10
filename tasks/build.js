@@ -9,24 +9,24 @@ var revReplace = require('gulp-rev-replace');
 var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
 var mainBowerFiles = require('main-bower-files');
-var Builder = require('systemjs-builder');
+var jspm = require('jspm');
 
 /* Prepare build using SystemJS Builder */
 gulp.task('build', function (done) {
-    runSequence('test', 'build-sjs', done);
+    runSequence('test', 'build-jspm', done);
 });
 
-gulp.task('build-sjs', function (done) {
-    runSequence('build-assets', 'tsc-app', buildSJS);
-    function buildSJS () {
-        var builder = new Builder();
-        builder.config(config.systemJs.main);
-        builder
-            .bundle(config.app + 'boot',
-                    config.build.path + config.app + 'boot.js', 
-            config.systemJs.builder)
-            .then(function () {
-                console.log('Build complete');
+gulp.task('build-jspm', function (done) {
+    runSequence('build-assets', 'tsc-app', buildJSPM);
+    function buildJSPM() {
+        jspm.setPackagePath('.');
+        jspm
+            .bundle(
+                config.app + 'boot',
+                config.build.path + config.app + 'boot.js',
+                config.systemJs.builder)
+            .then(function() {
+                console.log('Done JSPM!');
                 done();
             })
             .catch(function (ex) {

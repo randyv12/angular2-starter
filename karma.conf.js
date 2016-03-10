@@ -1,13 +1,13 @@
 module.exports = function(config) {
   var configuration = {
-    basePath: './',
+    basePath: '',
 
-    frameworks: ['jasmine'],
+    frameworks: ['jspm', 'jasmine'],
     browsers: ['PhantomJS'],
     reporters: ['progress', 'coverage'],
 
     preprocessors: {
-      'app/**/!(*.spec)+(.js)': ['coverage'],
+      'app/**/!(*.spec)+(.js)': ['sourcemap', 'coverage'],
       'app/**/*.js': ['sourcemap']
     },
 
@@ -19,32 +19,18 @@ module.exports = function(config) {
       ]
     },
 
+    jspm: {
+      loadFiles: ['test/test-helpers/setup.js', 'app/**/*.spec.js'],
+      serveFiles: ['app/**/*!(*.spec).js']
+    },
+
     files: [
-      'node_modules/traceur/bin/traceur-runtime.js',
-      //<!-- IE required polyfills, in this exact order -->
-      'node_modules/es6-shim/es6-shim.min.js',
-      'node_modules/systemjs/dist/system-polyfills.js',
-      'node_modules/angular2/es6/dev/src/testing/shims_for_IE.js',
-
-      'node_modules/angular2/bundles/angular2-polyfills.js',
-      // 'node_modules/zone.js/dist/zone-microtask.js',
-      // 'node_modules/zone.js/dist/long-stack-trace-zone.js',
-      // 'node_modules/zone.js/dist/jasmine-patch.js',
-      'node_modules/systemjs/dist/system.src.js',
-      'node_modules/reflect-metadata/Reflect.js',
-      'karma-test-shim.js',
-
-      { pattern: 'node_modules/angular2/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
-      { pattern: 'app/**/*.js', included: false, watched: true },
-      { pattern: 'test/test-helpers/*.js', included: false, watched: true },
-
       // paths loaded via Angular's component compiler
       // (these paths need to be rewritten, see proxies section)
       {pattern: 'app/**/*.html', included: false, watched: true},
       {pattern: 'app/**/*.css', included: false, watched: true},
 
-      // paths to support debugging with source maps in dev tools
+      // // paths to support debugging with source maps in dev tools
       {pattern: 'app/**/*.ts', included: false, watched: false},
       {pattern: 'app/**/*.js.map', included: false, watched: false}
     ],
@@ -52,7 +38,9 @@ module.exports = function(config) {
     // proxied base paths
     proxies: {
       // required for component assests fetched by Angular's compiler
-      "/app/": "/base/app/"
+      "/app/": "/base/app/",
+      "/test/": "/base/test/",
+      '/jspm_packages/': "/base/jspm_packages/"
     },
 
     port: 9876,
