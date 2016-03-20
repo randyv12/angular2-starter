@@ -1,9 +1,6 @@
-import {Pipe} from 'angular2/core';
+import {Pipe, PipeTransform} from 'angular2/core';
+import {ParentPipe} from './customParent.pipe';
 
 @Pipe({name: 'customLowercase'})
-export class CustomLowercase {
-  transform(value: any, args: Array<any>): string {
-    return value.toLowerCase();
-  }
-}
+export class CustomLowercase extends ParentPipe implements PipeTransform {}
 
