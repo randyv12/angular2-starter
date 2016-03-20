@@ -5,8 +5,11 @@ import {ChildComponent} from './child.component';
     selector: 'simplebind',
     templateUrl: 'app/simplebind/simplebind.html',
     directives: [ChildComponent]
+
 })
 export class SimplebindComponent {
+
+    public bar = new Date(2015, 1, 1);
     private myname: string;
 
     constructor() {

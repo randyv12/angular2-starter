@@ -9,3 +9,5 @@ app/**/*.js.map
 test/**/*.js
 test/**/*.js.map
 assets/styles/*.css
+.idea
+.idea/*
